@@ -167,6 +167,6 @@
         "imageCaptureWidth": 1920,
         "imageCaptureHeight": 1080,
         "videoImageTopic": "auvCameraImage",
-        "rovTransformTopic": "sim_rov_transform"
+        "rovTransformTopic": "/AUVInternalSystem/Position/globalEstimatedPosition"
     }
 }
