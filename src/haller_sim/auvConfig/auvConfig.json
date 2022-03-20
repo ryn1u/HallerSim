@@ -1,0 +1,172 @@
+{
+    "vehicle": {
+        "inertial": {
+            "moments": {
+                "Ix": 0.3,
+                "Iy": 0.3,
+                "Iz": 0.3,
+                "Ixy": 0.0,
+                "Iyx": 0.0,
+                "Ixz": 0.0,
+                "Izx": 0.0,
+                "Iyz": 0.0,
+                "Izy": 0.0
+            },
+            "mass": 19.0,
+            "centerOfGravity": [
+                0.0,
+                0.0,
+                0.02
+            ],
+            "centerOfBuoyancy": [
+                0.0,
+                0.0,
+                0.02
+            ]
+        },
+        "dragCoefficients": {
+            "linear": {
+                "Xu": -4.03,
+                "Yv": -6.22,
+                "Zw": 5.18,
+                "Kp": -0.07,
+                "Mq": -0.07,
+                "Nr": -0.07
+            },
+            "quadratic": {
+                "Xuu": -18.18,
+                "Yvv": -21.66,
+                "Zww": 36.99,
+                "Kpp": -1.55,
+                "Mqq": -1.55,
+                "Nrr": -1.55
+            }
+        },
+        "thrusters": {
+            "positions": [
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            ],
+            "rotations": [
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            ],
+            "azimuthal": [
+                false,
+                false,
+                false,
+                false,
+                false
+            ],
+            "maxThrust": 50.0
+        },
+        "servos": {
+            "speed": 0.03
+        },
+        "cameras": {
+            "positions": [
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            ],
+            "rotations": [
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            ],
+            "rotatable": [
+                false,
+                false
+            ],
+            "stereoscopic": [
+                false,
+                false
+            ],
+            "optical": {
+                "fov": [
+                    90.0,
+                    90.0
+                ]
+            }
+        }
+    },
+    "regulator": {
+        "Qmatrix": {},
+        "Rmatrix": {}
+    },
+    "simulation":
+    {
+        "rosIP": "192.168.0.249",
+        "imuROSTopic": "sim_imu",
+        "dvlROSTopic": "sim_dvl",
+        "imuMesgfrequency": 10.0,
+        "dvlMesgfrequency": 10.0,
+        "gravityConstant": 9.81,
+        "videoROSTopic": "sim_image",
+        "videoMsgFrequency": 15,
+        "imageCaptureWidth": 1920,
+        "imageCaptureHeight": 1080,
+        "videoImageTopic": "auvCameraImage",
+        "rovTransformTopic": "sim_rov_transform"
+    }
+}
