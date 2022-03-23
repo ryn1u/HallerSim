@@ -22,7 +22,11 @@ It typically has value **198.162.0.xxx**
   source devel/setup.bash
   roslaunch haller_sim endpoint.launch
 ```
+### Running Unity Simulation
 
+Go to folder containing downloaded build and unpack.
+Then go to 
+  
 ### BUILDS AVAILABLE AT
 
 https://drive.google.com/drive/folders/1_mSJqCyk6Kb4jB5M2lmCJClVihBUw8Jm?usp=sharing
