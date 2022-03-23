@@ -17,6 +17,7 @@ You can get host IP by running:
 ```
 It typically has value **198.162.0.xxx**
   
+Finally to run server endpoint:  
 ```
   cd <package folder>
   source devel/setup.bash
