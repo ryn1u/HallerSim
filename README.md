@@ -1,18 +1,18 @@
 ## HallerSim
 
 # First run
-'''
+```
   cd <package folder>
   catkin_make
-'''
+```
 
 # Running ROS Server
 
-'''
+```
   cd <package folder>
   source devel/setup.bash
   roslaunch haller_sim endpoint.launch
-'''
+```
 
 # BUILDS AVAILABLE AT
 
