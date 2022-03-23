@@ -26,7 +26,17 @@ Finally to run server endpoint:
 ### Running Unity Simulation
 
 Go to folder containing downloaded build and unpack.
-Then go to 
+Then go to Unity folder **HallerSim_Data/StreamingAssets/auvConfig/auvConfig.json** and again change the IP same as before. Return to main Unity folder.
+  
+If running on Linux:
+```
+  chmod +x HallerSim.x86_64
+```
+  
+Run the executable file (.x86_64 on Linux, .exe on Windows).
+First check all settings are correct. Then click **Connect to ROS**. Server endpoint should display a message abount incoming connection.
+  
+To start simulation click **Start Simulation**
   
 ### BUILDS AVAILABLE AT
 
