@@ -37,6 +37,7 @@ Run the executable file (.x86_64 on Linux, .exe on Windows).
 First check all settings are correct. Then click **Connect to ROS**. Server endpoint should display a message abount incoming connection.
   
 To start simulation click **Start Simulation**.
+
 **Remember!** You have to start running ROS server package before Unity simulation.
   
 ### BUILDS AVAILABLE AT
