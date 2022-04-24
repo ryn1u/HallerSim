@@ -1,0 +1,14 @@
+{
+	"rosIP": "192.168.0.249",
+	"imuROSTopic": "sim_imu",
+	"dvlROSTopic": "sim_dvl",
+	"imuMesgfrequency": 10.0,
+	"dvlMesgfrequency": 10.0,
+	"gravityConstant": 9.81,
+	"videoROSTopic": "sim_image",
+	"videoMsgFrequency": 15,
+	"imageCaptureWidth": 1920,
+	"imageCaptureHeight": 1080,
+	"videoImageTopic": "auvCameraImage",
+	"rovTransformTopic": "/AUVInternalSystem/Position/globalEstimatedPosition"
+}

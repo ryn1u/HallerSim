@@ -4,17 +4,13 @@ from distutils.command.config import config
 import rospy
 import json
 
+from haller_sim import load_config_data
 from ros_tcp_endpoint import TcpServer
 from ros_tcp_endpoint.subscriber import RosSubscriber
 from ros_tcp_endpoint.publisher import  RosPublisher
 from geometry_msgs.msg import Twist, Vector3
 from sensor_msgs.msg import CompressedImage, Imu
 
-
-def load_config_data():
-    path = '/'.join([*__file__.split('/')[0:-2], 'auvConfig', 'auvConfig.json'])
-    with open(path, 'r') as file:
-        return json.load(file)['simulation']
 
 def main():
     config_data = load_config_data()
