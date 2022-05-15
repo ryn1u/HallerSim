@@ -40,6 +40,11 @@ To start simulation click **Start Simulation**.
 
 **Remember!** You have to start running ROS server package before Unity simulation.
   
+### Image Processing 
+  
+To add image processing programs simply add a new python file inside ```HallerSim/src/haller_cpo/src/cpo_handlers/``` folder. Inside your python file create a class derived from *BaseCPO*. Exaple CPO handler is written in **image_view.py**.
+
+  
 ### Yolo
   
 Check out https://github.com/ryn1u/haller_yolov5
