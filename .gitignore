@@ -3,4 +3,5 @@
 **/devel
 **.idea
 venv
+**/__pycache__/
 

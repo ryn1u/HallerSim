@@ -9,6 +9,6 @@
 	"videoMsgFrequency": 15,
 	"imageCaptureWidth": 1920,
 	"imageCaptureHeight": 1080,
-	"videoImageTopic": "auvCameraImage",
+	"videoImageTopic": "/auvCameraImage",
 	"rovTransformTopic": "/AUVInternalSystem/Position/globalEstimatedPosition"
 }

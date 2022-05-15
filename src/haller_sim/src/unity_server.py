@@ -20,13 +20,15 @@ def main():
 
     # Start the Server Endpoint
     rospy.init_node(ros_node_name, anonymous=True)
-    tcp_server.start({
-    	'haller_move': RosSubscriber(config_data["rovTransformTopic"], Twist, tcp_server),
-        'sim_image': RosPublisher('sim_image', CompressedImage),
-        'sim_imu': RosPublisher('sim_imu', Imu),
-        'sim_dvl': RosPublisher('sim_dvl', Vector3),
-        'sim_depth_image' : RosPublisher('sim_depth_image', CompressedImage)
-    })
+    tcp_server.start(
+        {
+            'haller_move': RosSubscriber(config_data["rovTransformTopic"], Twist, tcp_server),
+            'sim_image': RosPublisher('sim_image', CompressedImage),
+            'sim_imu': RosPublisher('sim_imu', Imu),
+            'sim_dvl': RosPublisher('sim_dvl', Vector3),
+            'sim_depth_image': RosPublisher('sim_depth_image', CompressedImage)
+        }
+    )
     rospy.spin()
 
 
