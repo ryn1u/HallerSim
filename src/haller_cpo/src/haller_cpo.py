@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
 from cv_bridge import CvBridge
-from typing import List
+from typing import *
 
 from sensor_msgs.msg import Image
 from detection_msgs.msg import BoundingBoxes
@@ -40,6 +40,7 @@ class HallerCPO:
             topic_name: rospy.Subscriber(topic_name, message_type, self.__getattribute__(f"relay_{field_name}"))
             for field_name, (topic_name, message_type) in TOPICS.items()
         }
+        self.publishers: Dict[str, rospy.Publisher] = {}
         self.rate: rospy.Rate = None
 
     def relay_camera_image(self, image: Image):
@@ -56,6 +57,24 @@ class HallerCPO:
         for handler in self.handlers:
             handler.bounding_boxes = copy(bounding_boxes.bounding_boxes)
 
+    def relay_msg_to_handlers(self, topic, data):
+        for handler in self.handlers:
+            if topic in handler.received_msgs.keys():
+                handler.received_msgs[topic] = data
+
+    def send_handler_msgs(self, handler: BaseCPO):
+        for topic, msg_queue in handler.msgs_to_send.items():
+            if topic not in self.publishers and len(msg_queue) > 0:
+                self.publishers[topic] = rospy.Publisher(
+                    topic,
+                    msg_queue[0].__class__,
+                    queue_size=10
+                )
+
+            while len(msg_queue) > 0:
+                msg = msg_queue.pop()
+                self.publishers[topic].publish(msg)
+
     def start_cpo(self):
         rospy.init_node("haller_cpo", anonymous=True)
         self.rate = rospy.Rate(1)
@@ -67,7 +86,18 @@ class HallerCPO:
         while not rospy.is_shutdown():
             for handler in self.handlers:
                 handler.update()
+                self.send_handler_msgs(handler)
             self.rate.sleep()
+
+    def add_required_handler_topics(self, handler: BaseCPO):
+        for topic_name, topic_class in handler.required_topics:
+            handler.received_msgs[topic_name] = None
+            if topic_name not in self.subscribers:
+                self.subscribers[topic_name] = rospy.Subscriber(
+                    topic_name,
+                    topic_class,
+                    lambda data: self.relay_msg_to_handlers(topic_name, data)
+                )
 
     def init_cpo_handlers(self):
         handlers_dir = os.path.join(os.path.dirname(__file__), "cpo_handlers")
@@ -77,10 +107,14 @@ class HallerCPO:
         for file in files:
             module = importlib.import_module(f"cpo_handlers.{file}")
             for attr_name in dir(module):
+                if attr_name == 'BaseCPO':
+                    continue
                 attribute = module.__getattribute__(attr_name)
                 if inspect.isclass(attribute):
                     if issubclass(attribute, BaseCPO):
-                        self.handlers.append(attribute())
+                        handler = attribute()
+                        self.add_required_handler_topics(handler)
+                        self.handlers.append(handler)
         print(f"Added CPO handlers: {' '.join([h.__class__.__name__ for h in self.handlers])}")
 
 
