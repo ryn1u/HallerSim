@@ -2,5 +2,4 @@
     <rosparam file="$(find ros_tcp_endpoint)/config/params.yaml" command="load"/>
     <node name="server_endpoint" pkg="haller_sim" type="unity_server.py" args="--wait" output="screen" respawn="true" />
     <node name="image_viewer" pkg="haller_sim" type="image_viewer.py" args="--wait" output="screen" respawn="true" />
-    <node name="sim_sensors" pkg="haller_sim" type="sim_sensors.py" args="--wait" output="screen" respawn="true" />
 </launch>

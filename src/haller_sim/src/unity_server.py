@@ -8,6 +8,7 @@ from haller_sim import load_config_data
 from ros_tcp_endpoint import TcpServer
 from ros_tcp_endpoint.subscriber import RosSubscriber
 from ros_tcp_endpoint.publisher import RosPublisher
+from std_msgs.msg import Float32MultiArray
 from geometry_msgs.msg import Twist, Vector3
 from sensor_msgs.msg import CompressedImage, Imu
 
@@ -22,11 +23,11 @@ def main():
     rospy.init_node(ros_node_name, anonymous=True)
     tcp_server.start(
         {
-            'haller_move': RosSubscriber(config_data["rovTransformTopic"], Twist, tcp_server),
-            'sim_image': RosPublisher('sim_image', CompressedImage),
-            'sim_imu': RosPublisher('sim_imu', Imu),
-            'sim_dvl': RosPublisher('sim_dvl', Vector3),
-            'sim_depth_image': RosPublisher('sim_depth_image', CompressedImage)
+            config_data["simTargetPosition"]: RosSubscriber(config_data["simTargetPosition"], Twist, tcp_server),
+            config_data["simCurrentPosition"]: RosPublisher(config_data["simCurrentPosition"], Twist),
+            config_data['simVideoImage']: RosPublisher(config_data['simVideoImage'], CompressedImage),
+            config_data['simDepthImage']: RosPublisher(config_data['simDepthImage'], CompressedImage),
+            config_data['simDistanceMeasures']: RosPublisher(config_data['simDistanceMeasures'], Float32MultiArray)
         }
     )
     rospy.spin()
