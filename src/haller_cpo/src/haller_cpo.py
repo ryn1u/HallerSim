@@ -41,22 +41,23 @@ class HallerCPO(BaseROSHandler):
     def __init__(self):
         super().__init__()
         # Here goes all initialization code you need to implement.
-
-        self.pos = True
+        pass
 
     def update(self, current_position, video_image, depth_data, bounding_boxes: BoundingBoxes):
         # here goes CPO code. this method is called every second
         # angles are in degrees
         x, y, z, roll, pitch, yaw = current_position
-
-        if self.pos:
-            self.send_target_position(x + 10, y, z, roll, pitch, yaw)
-            self.pos = False
+        pass
 
     def send_target_position(self, x, y, z, roll, pitch, yaw):
         # Sends new target position to simulation. Remember to use North-East-Down coordinates
         msg = Twist(Vector3(x, y, z), Vector3(roll, pitch, yaw))
         self.publishers['simTargetPosition'].publish(msg)
+
+    def send_delta_position(self, x, y, z, roll, pitch, yaw):
+        # Sends new target position to simulation. Remember to use North-East-Down coordinates
+        msg = Twist(Vector3(x, y, z), Vector3(roll, pitch, yaw))
+        self.publishers['simDeltaPosition'].publish(msg)
 
 
 if __name__ == '__main__':

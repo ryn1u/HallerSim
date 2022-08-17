@@ -20,6 +20,7 @@ ROS_DEPTH_IMAGE_TOPIC_NAME = "ros_auv_depth_image"
 # Definitions of types for topics from auvConfig/simulationConfig.json
 DISTANCE_MEASURES_TOPIC = ("simDistanceMeasures", Float32MultiArray)
 TARGET_POSITION_TOPIC = ("simTargetPosition", Twist)
+DELTA_POSITION_TOPIC = ("simDeltaPosition", Twist)
 CURRENT_POSITION_TOPIC = ("simCurrentPosition", Twist)
 
 # Topics which are NOT defined in auvConfig/simulationConfig.json
@@ -67,7 +68,8 @@ class BaseROSHandler:
         subscribers = {**subscribers, **extra_subscribers}
 
         publisher_topics = [
-            TARGET_POSITION_TOPIC
+            TARGET_POSITION_TOPIC,
+            DELTA_POSITION_TOPIC
         ]
         publishers = {
             topic_handle: rospy.Publisher(SIMULATION_CONFIG[topic_handle], topic_type, queue_size=10)

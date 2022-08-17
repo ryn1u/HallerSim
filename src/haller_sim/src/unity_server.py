@@ -24,6 +24,7 @@ def main():
     tcp_server.start(
         {
             config_data["simTargetPosition"]: RosSubscriber(config_data["simTargetPosition"], Twist, tcp_server),
+            config_data["simDeltaPosition"]: RosSubscriber(config_data["simDeltaPosition"], Twist, tcp_server),
             config_data["simCurrentPosition"]: RosPublisher(config_data["simCurrentPosition"], Twist),
             config_data['simVideoImage']: RosPublisher(config_data['simVideoImage'], CompressedImage),
             config_data['simDepthImage']: RosPublisher(config_data['simDepthImage'], CompressedImage),
