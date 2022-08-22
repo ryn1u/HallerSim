@@ -39,7 +39,7 @@ class BaseROSHandler:
         self.subscribers, self.publishers = self.init_ros()
         self.rate: rospy.Rate = None
 
-        self.bounding_boxes = None
+        self.bounding_boxes = list()
         self.current_position = None
         self.video_image = None
         self.depth_image = None
@@ -94,7 +94,10 @@ class BaseROSHandler:
         )
 
     def update_bounding_boxes(self, data: BoundingBoxes):
-        self.bounding_boxes = data.bounding_boxes
+        if data.bounding_boxes is not None:
+            self.bounding_boxes = data.bounding_boxes
+        else:
+            self.bounding_boxes = list()
 
     @staticmethod
     def approx_distance(x):
