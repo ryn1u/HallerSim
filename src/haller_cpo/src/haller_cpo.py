@@ -12,6 +12,20 @@ import cv2
 import numpy as np
 
 
+import pyzed.sl as sl
+import sys
+from mask_tuning import mask_bounds
+from img_preprocess import *
+# from countur_detect import *
+import torch
+from torchvision.ops import nms
+import datetime
+import pandas as pd
+import time
+import typing
+from ZED_video import *
+from Tracking import *
+
 """
 SIMULATION STARTING SEQUENCE:
 1. Make sure simulationConfig.json files in Unity and ROS are the same and are latest version.
@@ -47,7 +61,61 @@ class HallerCPO(BaseROSHandler):
         # here goes CPO code. this method is called every second
         # angles are in degrees
         x, y, z, roll, pitch, yaw = current_position
-        pass
+        # fps = 1
+        do_u_want_zed = 1
+        perform_mask_tuning = 0
+
+        arr_dur = [1, 1, 1]
+
+        if perform_mask_tuning:
+            lower_bound, upper_bound = mask_bounds()
+        else:
+            lower_bound = np.array([0, 130, 117])
+            upper_bound = np.array([255, 139, 152])
+
+        start_time = time.time()
+        start_t0 = time.time()
+
+        frame = haller_cpo_handler.video_image
+
+        image_depth = haller_cpo_handler.depth_data
+        depth_frame = haller_cpo_handler.depth_data
+
+        arr_dur[0] = time.time() - start_t0
+
+        start_t1 = time.time()
+
+        masked_frame, masked_frame_in_BGR, enhanced_LAB_into_BGR = masked_img(frame, lower_bound, upper_bound)
+        #b_box = contour_detection(masked_frame, enhanced_LAB_into_BGR)
+
+        if bounding_boxes:
+            for obj in bounding_boxes:
+                if obj.Class == "bootleger":
+                    b_box = [obj.xmin, obj.ymin, obj.xmax - obj.xmin, obj.ymax - obj.ymin]
+                    label = obj.Class
+                    prob = obj.probability
+        else:
+            b_box = [540, 360, 0, 0]
+            label = "Tracking"
+            prob = 0
+
+
+        arr_track_data = TrackAndInf.track_object(b_box, depth_frame)
+        # frame = np.ascontiguousarray(frame, dtype=np.uint8)
+        cv2_im = TrackAndInf.draw_overlays(frame, b_box, arr_dur, arr_track_data, label, prob)
+        cv2.imshow("image", cv2_im)
+        arr_dur[1] = time.time() - start_t1
+
+        start_t2 = time.time()
+
+        arr_dur[2] = time.time() - start_t2
+        # cv.namedWindow('Image2', cv.WINDOW_NORMAL)
+        # cv.resizeWindow('Image2', 1000, 500)
+        # fps = round(1.0 / (time.time() - start_time), 1)
+        # cv.imshow("orange_detection", np.hstack([enhanced_LAB_into_BGR, masked_frame_in_BGR]))
+        arr_dur = [1, 1, 1]
+        if cv.waitKey(1) == ord('q'):
+            print("q")
 
     def send_target_position(self, x, y, z, roll, pitch, yaw):
         # Sends new target position to simulation. Remember to use North-East-Down coordinates
@@ -63,3 +131,6 @@ class HallerCPO(BaseROSHandler):
 if __name__ == '__main__':
     haller_cpo_handler = HallerCPO()
     haller_cpo_handler.start()
+
+
+
